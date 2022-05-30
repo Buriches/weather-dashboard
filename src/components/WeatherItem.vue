@@ -114,7 +114,7 @@ export default {
     margin-right: 6px;
   }
   &:hover{
-    background-color: red;
+    background-color: $bk-selection;
   }
   &__temp{
     text-align: right;
@@ -139,8 +139,8 @@ export default {
   letter-spacing: 0.03em;
   color: #3C3C3C;
   opacity: 0.8;
-  margin: 25px auto;
-  margin-bottom: 15px;
+  margin: 15px auto;
+  margin-bottom: 5px;
 }
 
 h1{

@@ -74,9 +74,6 @@ h3{
     position: relative;
     .wrap{
       height: 100%;
-      &__inner{
-        max-height: calc(100% - 200px);
-      }
     }
   }
   &__daily{
@@ -178,7 +175,7 @@ hr{
     font-size: 18px;
     line-height: 21px;
     letter-spacing: 0.03em;
-    color: #00A3FF;
+    color: $bk-accent;
   }
   &__bottom{
     display: flex;
@@ -216,7 +213,8 @@ h2{
   line-height: 35px;
 }
 .chart{
-  margin-bottom: 35px;
+  margin-bottom: 30px;
+  margin-top: -10px;
   &__title{
     display: flex;
     align-items: center;
@@ -226,7 +224,7 @@ h2{
     font-size: 16px;
     line-height: 19px;
     opacity: 0.5;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }
 #chart{
@@ -248,13 +246,13 @@ h2{
   font-size: 20px;
   line-height: 23px;
   &__active{
-    background-color: $bk-accent;
+    background-color: $bk-selection;
   }
   &__close{
     display: none;
   }
   &:hover{
-    background-color: $bk-selection;
+    background-color: $bk-accent;
     & .bookmark__close{
       display: inline;
     }
@@ -358,6 +356,10 @@ h2{
     height: 100%;
     background-color: $hr-color;
   }
+}
+.hourweather{
+  padding: 0 5px;
+  border-radius: 5px;
 }
 @media (max-width: 426px) {
   html{

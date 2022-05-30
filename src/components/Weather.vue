@@ -42,6 +42,7 @@ export default {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
+    background-color: white;
   }
   @media (max-width: 426px) {
     .wrapper{

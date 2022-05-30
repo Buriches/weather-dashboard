@@ -1,63 +1,107 @@
 <template>
-<div class="chart">
+<div class="chart" @click="paintTheChart">
   <canvas id="chart"></canvas>
 <div class="chart__title">
   <img src="../assets/images/icons/bar-chart.svg" alt="">
-  <span>temperature changing</span>
+  <span>temperature change for 24 hours</span>
 </div>
 </div>
 </template>
-
 <script>
+import Chart from "chart.js/auto"
+import {timeInTwoCharacter} from "@/scripts/service";
+
 export default {
   name: "Graph",
-  mounted() {
-    const canvas = document.getElementById('chart')
-    const ctx = chart.getContext('2d');
-    ctx.fillStyle = "#00A3FF";
-    let maxPoint = this.weather48h[0].temp
-    let minPoint = this.weather48h[0].temp
-    this.weather48h.forEach((index)=>{
-      if (index.temp > maxPoint){
-        maxPoint = index.temp
-      }
-    })
-    this.weather48h.forEach((index)=>{
-      if (index.temp < minPoint){
-        minPoint = index.temp
-      }
-    })
-
-    const height = 20
-    const diff = maxPoint - minPoint
-    const heightUnit = diff / height
-    for (let i = 0; i < this.weather48h.length; i++){
-      const currentPoint = this.weather48h[i].temp - minPoint
-      this.weather48h[i].position = Math.round(currentPoint / heightUnit)
+  props: ['weather48h'],
+  data(){
+    return {
+        myChart: ''
     }
-    let prevX = 0
-    let prevY = canvas.offsetHeight / height * (height - this.weather48h[0].position)
-
-    for (let i = 0; i < this.weather48h.length; i++){
-      const y = canvas.offsetHeight / height * (height - this.weather48h[i].position)
-      //ctx.fillRect(i*canvas.offsetWidth/80, y*2.5, 4, 5)
-      //console.log(y)
-      ctx.beginPath();
-      ctx.strokeStyle = '#00A3FF'
-
-      ctx.moveTo(prevX,prevY);
-      ctx.lineTo(i*canvas.offsetWidth/68, y*2.7);
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      prevX = i*canvas.offsetWidth/68;
-      prevY = y*2.7;
-    }
-
   },
-  props: {
-    weather48h: {
-      type: Array,
-      default: []
+  mounted() {
+    this.paintTheChart();
+  },
+  watch: {
+    weather48h: function (){
+      this.paintTheChart();
+    }
+  },
+  methods: {
+    paintTheChart(){
+      if (this.myChart){
+        this.myChart.destroy()
+      }
+      let labels = [];
+      for (let i = 0; i < 24; i++){
+        labels.push(this.dateAndTime(this.weather48h[i].dt))
+      }
+      let arrOfTemperatures = this.weather48h.map(i => i.temp)
+      arrOfTemperatures.length = 24
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'Temperature',
+          backgroundColor: 'transparent',
+          borderColor: '#00A3FF',
+          data: arrOfTemperatures,
+
+        }]
+      };
+      const options = {
+        bezierCurve : 100,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        elements: {
+          line: {
+            tension: .3
+          },
+          point:{
+            radius: 3
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+              drawBorder: false,
+              lineWidth: 0.5,
+            },
+            ticks: {
+              display: false
+            }
+          },
+          y: {
+            grid: {
+              display: false,
+              drawBorder: false,
+              lineWidth: 0.5,
+            },
+            ticks: {
+              display: false,
+
+            }
+          },
+        },
+      }
+
+      const config = {
+        type: 'line',
+        data: data,
+        options: options
+      };
+      this.myChart = new Chart(
+          document.getElementById('chart'),
+          config
+      );
+
+    },
+    dateAndTime(dt){
+      let time = new Date(dt*1000)
+      return `${timeInTwoCharacter(time.getMonth() + 1)}.${timeInTwoCharacter(time.getDate())} ${time.getHours()}:00`
     }
   }
 }

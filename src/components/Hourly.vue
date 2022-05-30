@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap__hourly">
+  <div class="wrap__hourly" id="hourly">
     <div class="wrap">
       <h3>48 hours ahead:</h3>
       <hr>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 import Overlay from "@/components/Overlay";
 import HourlyList from '@/components/HourlyList'
 import Chart from "@/components/Chart";
@@ -27,9 +28,9 @@ export default {
   },
   data(){
     return{
-      type: 'Hourly'
+      type: 'Hourly',
     }
-  }
+  },
 }
 </script>
 
