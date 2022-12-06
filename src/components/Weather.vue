@@ -4,7 +4,7 @@
         <div class="wrap__main">
           <div class="caption">
             <h1>Weather broadcast</h1>
-            <span>by KirilPepega & DeinsOne</span>
+            <span>by Buriches</span>
           </div>
           <header-of-weather></header-of-weather>
           <bookmark-list/>
