@@ -17,6 +17,8 @@ pnpm-debug.log*
 .idea
 .vscode
 .firebase
+.browserslistrc
+.firebaserc
 *.suo
 *.ntvs*
 *.njsproj
